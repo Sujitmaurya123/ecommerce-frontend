@@ -3,79 +3,109 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { auth } from "../firebase";
-// import { useDispatch } from "react-redux";
-import { useLoginMutation } from "../redux/api/userAPI";
+
+import { getUser, useLoginMutation } from "../redux/api/userAPI";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
 import { MessageResponse } from "../types/api-types";
+import { userExist, userNotExist } from "../redux/reducer/userReducer";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   //  const dispatch = useDispatch();
-    const [gender,setGender]=useState("");
-    const [date,setDate]=useState("");
+  //   const [gender,setGender]=useState("");
+  //   const [date,setDate]=useState("");
+
+  //   const [login] = useLoginMutation();
+
+
+  //   const loginHandler=async()=>{
+  //       try {
+
+  //       const provider = new GoogleAuthProvider();
+  //     const { user } = await signInWithPopup(auth, provider);
+
+  //     console.log({
+  //       name: user.displayName!,
+  //       email: user.email!,
+  //       photo: user.photoURL!,
+  //       gender,
+  //       role: "user",
+  //       dob: date,
+  //       _id: user.uid,
+  //     });
+
+  //     const res = await login({
+  //       name: user.displayName!,
+  //       email: user.email!,
+  //       photo: user.photoURL!,
+  //       gender,
+  //       role: "user",
+  //       dob: date,
+  //       _id: user.uid,
+  //     });
+
+  //     if ("data" in res) {
+  //       toast.success(res.data.message);
+  //       const data = await getUser(user.uid);
+  //       dispatch(userExist(data?.user!));
+  //     } else {
+  //       const error = res.error as FetchBaseQueryError;
+  //       const message = (error.data as MessageResponse).message;
+  //       toast.error(message);
+  //       dispatch(userNotExist());
+  //     }
+  //       } catch (error) {
+  //           toast.error("Sign In Fail");
+  //       }
+    
+ const dispatch = useDispatch();
+    const [gender, setGender] = useState("");
+    const [date, setDate] = useState("");
 
     const [login] = useLoginMutation();
 
-
-    const loginHandler=async()=>{
+    const loginHandler = async () => {
         try {
+            const provider = new GoogleAuthProvider();
+            const { user } = await signInWithPopup(auth, provider);
 
-        const provider = new GoogleAuthProvider();
-      const { user } = await signInWithPopup(auth, provider);
+            console.log({
+                name: user.displayName!,
+                email: user.email!,
+                photo: user.photoURL!,
+                gender,
+                role: "user",
+                dob: date,
+                _id: user.uid,
+            });
 
-      console.log({
-        name: user.displayName!,
-        email: user.email!,
-        photo: user.photoURL!,
-        gender,
-        role: "user",
-        dob: date,
-        _id: user.uid,
-      });
+            const res = await login({
+                name: user.displayName!,
+                email: user.email!,
+                photo: user.photoURL!,
+                gender,
+                role: "user",
+                dob: date,
+                _id: user.uid,
+            });
 
-      const res = await login({
-        name: user.displayName!,
-        email: user.email!,
-        photo: user.photoURL!,
-        gender,
-        role: "user",
-        dob: date,
-        _id: user.uid,
-      });
-
-    //   if ("data" in res) {
-    //     toast.success(res.data.message);
-    //     // const data = await getUser(user.uid);
-    //     // dispatch(userExist(data?.user!));
-    //   } else {
-    //     const error = res.error as FetchBaseQueryError;
-    //     const message = (error.data as MessageResponse).message;
-    //     toast.error(message);
-    //     // dispatch(userNotExist());
-    //   }
-    //     } catch (error) {
-    //         toast.error("Sign In Fail");
-    //     }
-    
-
-    if (res.data) {
-    // 'res.data' exists and is not 'null' or 'undefined'
-    toast.success(res.data.message);
-    // Example: const data = await getUser(user.uid);
-    // dispatch(userExist(data?.user!));
-     } else if (res.error) {
-    // 'res.error' exists
-    const error = res.error as FetchBaseQueryError;
-    const message = (error.data as MessageResponse)?.message || "Unknown error";
-    toast.error(message);
-    // dispatch(userNotExist());
-     } else {
-    // Handle unexpected response
-    toast.error("Unknown response structure");
-     }
-    } catch (error) {
-  // Handle any errors thrown by the login function or network errors
-  toast.error("Sign In Failed");
-    }
+              if (res.data && 'message' in res.data) {
+                toast.success(res.data.message);
+                const data = await getUser(user.uid);
+                if (data?.user) {
+                    dispatch(userExist(data.user));
+                } else {
+                    toast.error("User data not found");
+                }
+            } else {
+                const error = res.error as FetchBaseQueryError;
+                const message = (error.data as MessageResponse)?.message || "Unknown error occurred";
+                toast.error(message);
+                dispatch(userNotExist());
+            }
+        } catch (error) {
+            toast.error("Sign In Fail");
+        }
      };
 
   return (
