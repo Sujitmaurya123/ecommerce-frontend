@@ -36,7 +36,7 @@ const NewProduct = () => {
    const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!name || !price || stock < 0 || !category || !photo) return;
+    if (!name || !price || stock < 0 || !category || !photo||!user || !user._id) return;
 
     const formData = new FormData();
 
@@ -46,7 +46,7 @@ const NewProduct = () => {
     formData.set("photo", photo);
     formData.set("category", category);
 
-    const res = await newProduct({ id: user?._id!, formData });
+    const res = await newProduct({ id: user?._id, formData });
 
     responseToast(res, navigate, "/admin/product");
   };
@@ -103,7 +103,7 @@ const NewProduct = () => {
 
             <div>
               <label>Photo</label>
-              <input required type="file" onChange={changeImageHandler} />
+              <input title="_" required type="file" onChange={changeImageHandler} />
             </div>
 
             {photoPrev && <img src={photoPrev} alt="New Image" />}

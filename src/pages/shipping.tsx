@@ -2,15 +2,15 @@ import { ChangeEvent, useEffect, useState } from "react"
 import {BiArrowBack} from "react-icons/bi"
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../redux/store";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 
 const Shipping = () => {
     const navigate=useNavigate();
-     const { cartItems, total } = useSelector(
+     const { cartItems } = useSelector(
     (state: RootState) => state.cartReducer
   );
   
-  const dispatch = useDispatch();
+
 
     const [shippingInfo,setShippingInfo]=useState({
         address:"",
@@ -30,7 +30,7 @@ const Shipping = () => {
 
   return (
   <div  className="shipping">
-    <button  className="back-btn" onClick={()=>navigate("/cart")}  >
+    <button title="_" className="back-btn" onClick={()=>navigate("/cart")}  >
     <BiArrowBack/>
     </button>
 
@@ -57,7 +57,7 @@ const Shipping = () => {
         value={shippingInfo.state}
         onChange={changeHandler} />
 
-        <select 
+        <select title="_"
         name="country"
         required
         value={shippingInfo.country}

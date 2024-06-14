@@ -3,7 +3,7 @@ import { Suspense, lazy, useEffect } from "react";
 import Loader from "./components/loader";
 import Header from "./components/header";
 import {Toaster}from "react-hot-toast"
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged} from "firebase/auth";
 import { auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { userExist, userNotExist } from "./redux/reducer/userReducer";
@@ -52,7 +52,12 @@ const App = () => {
       if (user) {
         const data = await getUser(user.uid);
         
-        dispatch(userExist(data.user));
+        if (data) {
+         dispatch(userExist(data.user));
+      } else {
+        // Handle the case where data is undefined
+        dispatch(userNotExist());
+      }
       } else dispatch(userNotExist());
     });
   }, []);

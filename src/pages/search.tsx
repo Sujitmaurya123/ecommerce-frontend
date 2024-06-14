@@ -59,7 +59,7 @@ const Search = () => {
       <h2>Filters</h2>
       <div>
         <h4>Sort</h4>
-        <select value={sort}onChange={(e)=>setSort(e.target.value)} >
+        <select title="_" value={sort}onChange={(e)=>setSort(e.target.value)} >
 
         <option value="">None</option>
         <option value="asc">Price (Low to High)</option>
@@ -68,7 +68,7 @@ const Search = () => {
       </div>
       <div>
         <h4>Max Price :{maxPrice ||""}</h4>
-        <input
+        <input title="_"
         type="range"
         min={100}
         max={100000}
@@ -80,7 +80,7 @@ const Search = () => {
 
       <div>
         <h4>Category</h4>
-        <select value={sort}onChange={(e)=>setCategory(e.target.value)} >
+        <select title="_" value={sort}onChange={(e)=>setCategory(e.target.value)} >
 
         <option value="">ALL</option>
         {!loadingCategories &&

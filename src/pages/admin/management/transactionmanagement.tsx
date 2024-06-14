@@ -54,21 +54,40 @@ const TransactionManagement = () => {
   const [updateOrder] = useUpdateOrderMutation();
   const [deleteOrder] = useDeleteOrderMutation();
 
-  const updateHandler = async () => {
-    const res = await updateOrder({
-      userId: user?._id!,
-      orderId: data?.order._id!,
-    });
-    responseToast(res, navigate, "/admin/transaction");
-  };
+  // const updateHandler = async () => {
+  //   const res = await updateOrder({
+  //     userId: user?._id!,
+  //     orderId: data?.order._id!,
+  //   });
+  //   responseToast(res, navigate, "/admin/transaction");
+  // };
 
-  const deleteHandler = async () => {
-    const res = await deleteOrder({
-      userId: user?._id!,
-      orderId: data?.order._id!,
+  // const deleteHandler = async () => {
+  //   const res = await deleteOrder({
+  //     userId: user?._id!,
+  //     orderId: data?.order._id!,
+  //   });
+  //   responseToast(res, navigate, "/admin/transaction");
+  // };
+  const updateHandler = async () => {
+  if (user?._id && data?.order._id) {
+    const res = await updateOrder({
+      userId: user._id,
+      orderId: data.order._id,
     });
     responseToast(res, navigate, "/admin/transaction");
-  };
+  }
+};
+
+const deleteHandler = async () => {
+  if (user?._id && data?.order._id) {
+    const res = await deleteOrder({
+      userId: user._id,
+      orderId: data.order._id,
+    });
+    responseToast(res, navigate, "/admin/transaction");
+  }
+};
 
   if (isError) return <Navigate to={"/404"} />;
 
@@ -101,7 +120,7 @@ const TransactionManagement = () => {
             </section>
 
             <article className="shipping-info-card">
-              <button className="product-delete-btn" onClick={deleteHandler}>
+              <button title="_" className="product-delete-btn" onClick={deleteHandler}>
                 <FaTrash />
               </button>
               <h1>Order Info</h1>

@@ -21,7 +21,7 @@ const ProductCard = ({productId,price,name,photo,stock,handler}:ProductsProps) =
       <p>{name}</p>
       <span>₹{price}</span>
       <div>
-        <button onClick={()=>handler({productId,price,name,photo,stock,quantity:1})}> 
+        <button title="_" onClick={()=>handler({productId,price,name,photo,stock,quantity:1})}> 
           <FaPlus/>
         </button>
       </div>

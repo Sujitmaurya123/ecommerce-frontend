@@ -1,4 +1,3 @@
-import React from 'react'
 
 const loader = () => {
   return (
@@ -8,7 +7,7 @@ const loader = () => {
   )
 }
 
-export default loader
+export default loader;
 
 interface SkeletonProps {
   width?: string;
