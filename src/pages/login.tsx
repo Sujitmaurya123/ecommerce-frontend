@@ -20,6 +20,7 @@ const Login = () => {
     try {
       const provider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(auth, provider);
+      console.log(user)
 
       console.log({
         name: user.displayName!,

@@ -45,7 +45,7 @@ const App = () => {
   //   (state: RootState) => state.userReducer
   // );
   // return signOut(auth).then((c)=>console.log("Done"));
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
     useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -60,7 +60,7 @@ const App = () => {
       }
       } else dispatch(userNotExist());
     });
-  }, []);
+  }, [dispatch]);
 
   return  loading ?<Loader />: (
     <Router>
