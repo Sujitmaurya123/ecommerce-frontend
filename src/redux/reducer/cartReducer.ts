@@ -68,4 +68,5 @@ export const {addToCart,
   calculatePrice,
   discountApplied,
   saveShippingInfo,
+  resetCart,
 }=cartReducer.actions;

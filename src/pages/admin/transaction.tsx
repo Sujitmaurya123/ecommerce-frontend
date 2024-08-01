@@ -49,7 +49,7 @@ const columns: Column<DataType>[] = [
 const Transaction = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
-  const { isLoading, data, isError, error } = useAllOrdersQuery(user?._id!);
+  const { isLoading, data, isError, error } = useAllOrdersQuery(user?._id as string);
 
   const [rows, setRows] = useState<DataType[]>([]);
 
@@ -62,7 +62,7 @@ const Transaction = () => {
     if (data)
       setRows(
         data.orders.map((i) => ({
-          user: i.user.name,
+          user: i.user.name ,
           amount: i.total,
           discount: i.discount,
           quantity: i.orderItems.length,
